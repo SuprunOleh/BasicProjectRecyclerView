@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BasicProjectRecyclerView</string>
+    <string name="user_id">Id</string>
+    <string name="user_name">Name</string>
+    <string name="user_surname">Surname</string>
+    <string name="user_tel">tel</string>
+</resources>
