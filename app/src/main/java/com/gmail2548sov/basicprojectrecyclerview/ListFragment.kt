@@ -1,5 +1,6 @@
 package com.gmail2548sov.basicprojectrecyclerview
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,7 @@ class ListFragment: Fragment() {
     }
 
     fun updateUI(){
+
         mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
         mRecyclerView.adapter = mUserAdapter
     }
@@ -48,11 +50,18 @@ class ListFragment: Fragment() {
 
         fun bindingDateUser(dataUser:DatfClass){
             mUser = dataUser
-            view.item_id.text = dataUser.id.toString()
+            view.item_id.text = mUser.id.toString()
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context, mUser.id.toString(), Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, mUser.id.toString(), Toast.LENGTH_LONG).show()
+            //val intent = Intent(activity, MainActivity::class.java)
+
+            val intent = MainActivity.newIntent(context, mUser.id)
+
+            startActivity(intent)
+
+
         }
 
 
@@ -61,6 +70,7 @@ class ListFragment: Fragment() {
     }
 
     inner class UsersAdapter(val listUsers: ArrayList<DatfClass>):RecyclerView.Adapter<UsersHolder>() {
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersHolder {
             val userAdapterInflater = LayoutInflater.from(context)

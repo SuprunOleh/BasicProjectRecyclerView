@@ -7,16 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_user.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class UserFragment: Fragment() {
 
-    lateinit var mDataClass:DatfClass
-    val mListUsers: ArrayList<DatfClass> = SingltonUsers.mListUsers
+    var mDataClass: DatfClass? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mDataClass = DatfClass()
+        var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
+        mDataClass = SingltonUsers.getUser(id)
     }
 
     override fun onCreateView(
@@ -25,9 +27,8 @@ class UserFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_user, container, false)
-        view.user_id.text = SingltonUsers.mListUsers[5].id.toString()
+        view.user_id.text = mDataClass?.id.toString()
         return view
-
     }
 
 }
