@@ -27,6 +27,8 @@ class MainActivity : AbstractActivityForFragment() {
 
 
     override fun getFragment():Fragment {
-        return UserFragment()
+        //  val intent = Intent()
+        mId = intent.getSerializableExtra(ID_USER) as UUID
+        return UserFragment.newInstance(mId)
    }
 }

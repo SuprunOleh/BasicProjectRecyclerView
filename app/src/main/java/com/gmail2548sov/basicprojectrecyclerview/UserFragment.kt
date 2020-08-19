@@ -13,11 +13,24 @@ import kotlin.collections.ArrayList
 
 class UserFragment: Fragment() {
 
+    companion object{
+        final val FRAGMENT_USER_ID:String = "fragment_user_id"
+
+        fun newInstance(id:UUID): Fragment {
+            val args:Bundle = Bundle()
+            args.putSerializable(FRAGMENT_USER_ID, id)
+            val fragment = UserFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     var mDataClass: DatfClass? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
+        //var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
+        var id = arguments?.getSerializable(FRAGMENT_USER_ID) as UUID
         mDataClass = SingltonUsers.getUser(id)
     }
 
