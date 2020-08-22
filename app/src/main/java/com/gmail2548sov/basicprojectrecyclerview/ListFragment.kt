@@ -12,21 +12,22 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_user.view.*
 import java.util.zip.Inflater
 
-class ListFragment: Fragment() {
+class ListFragment : Fragment() {
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mUserAdapter: UsersAdapter
+    var mUserAdapter: UsersAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view:View = inflater.inflate(R.layout.fragment_list,container,false)
+        val view: View = inflater.inflate(R.layout.fragment_list, container, false)
 
         mRecyclerView = view.findViewById(R.id.myRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -34,21 +35,30 @@ class ListFragment: Fragment() {
         return view
     }
 
-    fun updateUI(){
-
-        mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
-        mRecyclerView.adapter = mUserAdapter
+    override fun onResume() {
+        super.onResume()
+        updateUI()
     }
 
-    inner class UsersHolder(val view:View): RecyclerView.ViewHolder(view), View.OnClickListener {
+    fun updateUI() {
 
-        lateinit var mUser:DatfClass
+        if (mUserAdapter == null) {
+            mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
+            mRecyclerView.adapter = mUserAdapter
+        } else mUserAdapter?.notifyItemChanged(SingltonUsers.mChange)
 
-        init{
+
+    }
+
+    inner class UsersHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        lateinit var mUser: DatfClass
+
+        init {
             view.setOnClickListener(this)
         }
 
-        fun bindingDateUser(dataUser:DatfClass){
+        fun bindingDateUser(dataUser: DatfClass) {
             mUser = dataUser
             view.item_id.text = mUser.id.toString()
         }
@@ -61,16 +71,12 @@ class ListFragment: Fragment() {
 
             startActivity(intent)
 
-
         }
-
-
-
 
     }
 
-    inner class UsersAdapter(val listUsers: ArrayList<DatfClass>):RecyclerView.Adapter<UsersHolder>() {
-
+    inner class UsersAdapter(val listUsers: ArrayList<DatfClass>) :
+        RecyclerView.Adapter<UsersHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersHolder {
             val userAdapterInflater = LayoutInflater.from(context)

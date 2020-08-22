@@ -8,6 +8,8 @@ import kotlin.collections.ArrayList
 object SingltonUsers {
     val mListUsers: ArrayList<DatfClass> = ArrayList()
     lateinit var context: Context
+    var mChange: Int = 0
+
 
     init {
         for (i: Int in 0..99) {
@@ -17,7 +19,10 @@ object SingltonUsers {
     }
 
     fun getUser(id:UUID): DatfClass? {
-        for (i in mListUsers) if (i.id==id) {return i}
+        for (i in mListUsers) {
+            mChange++
+            if (i.id==id) {return i}
+        }
         return null
     }
 
