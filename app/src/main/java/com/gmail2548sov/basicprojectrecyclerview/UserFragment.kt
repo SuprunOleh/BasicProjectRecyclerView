@@ -1,9 +1,11 @@
 package com.gmail2548sov.basicprojectrecyclerview
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_user.view.*
@@ -11,7 +13,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class UserFragment: Fragment() {
+class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener {
 
     companion object{
         final val FRAGMENT_USER_ID:String = "fragment_user_id"
@@ -41,7 +43,15 @@ class UserFragment: Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_user, container, false)
         view.user_id.text = mDataClass?.id.toString()
+        view.photo.isChecked = mDataClass?.poto?:false
+        view.photo.setOnCheckedChangeListener(this)
         return view
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        mDataClass?.poto = isChecked
+        Log.d("kl555", "${mDataClass?.poto.toString()}")
+
     }
 
 }

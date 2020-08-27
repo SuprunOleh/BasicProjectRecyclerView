@@ -4,8 +4,9 @@ import java.util.*
 
 data class DatfClass(
     val id: UUID = UUID.randomUUID(),
-    val name: String? = null,
-    val surname: String? = null,
-    val tel: String? = null,
-    val dataCreator: Date = Date()
+    var name: String? = null,
+    var surname: String? = null,
+    var tel: String? = null,
+    val dataCreator: Date = Date(),
+    var poto: Boolean = false
 )

@@ -12,16 +12,21 @@ object SingltonUsers {
 
 
     init {
+
         for (i: Int in 0..99) {
-            mListUsers.add(DatfClass())
+            val user: DatfClass = DatfClass()
+            user.poto = i%2 == 0
+            mListUsers.add(user)
+
             Log.d ("mDataList", mListUsers[i].toString())
         }
     }
 
     fun getUser(id:UUID): DatfClass? {
         for (i in mListUsers) {
-            mChange++
-            if (i.id==id) {return i}
+
+            if (i.id==id) {
+                return i}
         }
         return null
     }
