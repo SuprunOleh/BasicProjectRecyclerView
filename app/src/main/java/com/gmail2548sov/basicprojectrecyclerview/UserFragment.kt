@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.fragment_user.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener {
+class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     companion object{
         final val FRAGMENT_USER_ID:String = "fragment_user_id"
+        final val DIALOG = "DialogTel"
 
         fun newInstance(id:UUID): Fragment {
             val args:Bundle = Bundle()
@@ -45,12 +47,23 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener {
         view.user_id.text = mDataClass?.id.toString()
         view.photo.isChecked = mDataClass?.poto?:false
         view.photo.setOnCheckedChangeListener(this)
+
+        view.tel.setOnClickListener(this)
+
         return view
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         mDataClass?.poto = isChecked
         Log.d("kl555", "${mDataClass?.poto.toString()}")
+
+    }
+
+    override fun onClick(v: View?) {
+        val fm = fragmentManager
+        val dialogTel = TelPickerFragment()
+        fm?.let { dialogTel.show(it, DIALOG) }
+
 
     }
 

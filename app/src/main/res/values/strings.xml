@@ -4,4 +4,6 @@
     <string name="user_name">Name</string>
     <string name="user_surname">Surname</string>
     <string name="user_tel">tel</string>
+    <string name="num_tel">non</string>
+    <string name="tel_picker_title">Tel of user</string>
 </resources>
