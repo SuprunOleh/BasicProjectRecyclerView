@@ -45,6 +45,7 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_user, container, false)
         view.user_id.text = mDataClass?.id.toString()
+        view.data_dialog_fragment_user.text = mDataClass?.dataCreator.toString()
         view.photo.isChecked = mDataClass?.poto?:false
         view.photo.setOnCheckedChangeListener(this)
 

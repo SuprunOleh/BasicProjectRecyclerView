@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_user.view.*
 import kotlinx.android.synthetic.main.item_user.*
 import kotlinx.android.synthetic.main.item_user.view.*
+import kotlinx.android.synthetic.main.item_user.view.photo
 import java.util.zip.Inflater
 
 class ListFragment : Fragment() {

@@ -16,6 +16,7 @@ object SingltonUsers {
         for (i: Int in 0..99) {
             val user: DatfClass = DatfClass()
             user.poto = i%2 == 0
+            Log.d ("datd333", "${user.dataCreator.toString()}")
             mListUsers.add(user)
 
             Log.d ("mDataList", mListUsers[i].toString())
