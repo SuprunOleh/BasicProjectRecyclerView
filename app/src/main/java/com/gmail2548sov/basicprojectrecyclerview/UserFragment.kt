@@ -18,7 +18,7 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
 
     companion object{
         final val FRAGMENT_USER_ID:String = "fragment_user_id"
-        final val DIALOG = "DialogTel"
+        final val DIALOG:String = "DialogTel"
 
         fun newInstance(id:UUID): Fragment {
             val args:Bundle = Bundle()
@@ -62,7 +62,9 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
 
     override fun onClick(v: View?) {
         val fm = fragmentManager
-        val dialogTel = TelPickerFragment()
+
+
+        val dialogTel = TelPickerFragment.newInstance(mDataClass?.dataCreator)
         fm?.let { dialogTel.show(it, DIALOG) }
 
 
