@@ -1,14 +1,16 @@
 package com.gmail2548sov.basicprojectrecyclerview
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import kotlinx.android.synthetic.main.date_dialog.*
+import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -19,6 +21,7 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
     companion object{
         final val FRAGMENT_USER_ID:String = "fragment_user_id"
         final val DIALOG:String = "DialogTel"
+        final val REQUEST_DATA: Int = 0
 
         fun newInstance(id:UUID): Fragment {
             val args:Bundle = Bundle()
@@ -30,6 +33,11 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
     }
 
     var mDataClass: DatfClass? = null
+    lateinit var mDateButton: TextView
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,20 +52,19 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_user, container, false)
+        mDateButton = view.data_dialog_fragment_user
         view.user_id.text = mDataClass?.id.toString()
-        view.data_dialog_fragment_user.text = mDataClass?.dataCreator.toString()
+        updateDate()
+        //view?.data_dialog_fragment_user?.text = mDataClass?.dataCreator.toString()
         view.photo.isChecked = mDataClass?.poto?:false
         view.photo.setOnCheckedChangeListener(this)
-
         view.tel.setOnClickListener(this)
-
         return view
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         mDataClass?.poto = isChecked
         Log.d("kl555", "${mDataClass?.poto.toString()}")
-
     }
 
     override fun onClick(v: View?) {
@@ -65,9 +72,23 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
 
 
         val dialogTel = TelPickerFragment.newInstance(mDataClass?.dataCreator)
+        dialogTel.setTargetFragment(this, REQUEST_DATA)
         fm?.let { dialogTel.show(it, DIALOG) }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode!=RESULT_OK) {return}
+        if (requestCode == REQUEST_DATA) {
+            val date:Date = data?.getSerializableExtra(TelPickerFragment.EXTRA_DATA) as Date
+            mDataClass?.dataCreator = date
+            updateDate()
+            Log.d ("778899p", "${updateDate()}, 777")
+        }
+    }
 
+    fun updateDate(){
+        mDateButton.text = mDataClass?.dataCreator.toString()
     }
 
 }

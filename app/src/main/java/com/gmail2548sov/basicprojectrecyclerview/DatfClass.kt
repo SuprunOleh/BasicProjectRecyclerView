@@ -7,6 +7,6 @@ data class DatfClass(
     var name: String? = null,
     var surname: String? = null,
     var tel: String? = null,
-    var dataCreator: Date = Date(119, 0,15),
+    var dataCreator: Date = Date(),
     var poto: Boolean = false
 )

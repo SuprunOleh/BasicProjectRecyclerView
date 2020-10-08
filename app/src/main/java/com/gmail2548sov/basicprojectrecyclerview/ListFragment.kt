@@ -3,9 +3,7 @@ package com.gmail2548sov.basicprojectrecyclerview
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +19,37 @@ class ListFragment : Fragment() {
     lateinit var mRecyclerView: RecyclerView
     var mUserAdapter: UsersAdapter? = null
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_list,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("menu333", "asdfasd ")
+
+
+        when (item.itemId) {
+            R.id.new_user -> {
+                val user: DatfClass = DatfClass()
+                SingltonUsers.addUser(user)
+                Log.d("menu333", "asdfasd ${user.toString()}")
+                val intent = UserPagerActivity.newIntent(context, user.id)
+
+                startActivity(intent)
+
+
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
 

@@ -37,15 +37,12 @@ class UserPagerActivity: AppCompatActivity() {
             override fun getItem(position: Int): Fragment {
                 Log.d("lk111", "$position")
                 return UserFragment.newInstance(mUsers.get(position).id)
-
             }
-
             override fun getCount(): Int {
                 return mUsers.size
-
             }
-
         })
+
         for (i in 0..mUsers.size) {
             if (mUsers.get(i).id==intent.getSerializableExtra(ID_USER)) {
                 mViewPager.currentItem = i

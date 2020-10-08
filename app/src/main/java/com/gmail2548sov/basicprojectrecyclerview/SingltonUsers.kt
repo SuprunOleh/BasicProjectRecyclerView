@@ -11,17 +11,22 @@ object SingltonUsers {
     var mChange: Int = 0
 
 
-    init {
-
-        for (i: Int in 0..99) {
-            val user: DatfClass = DatfClass()
-            user.poto = i%2 == 0
-            Log.d ("datd333", "${user.dataCreator.toString()}")
-            mListUsers.add(user)
-
-            Log.d ("mDataList", mListUsers[i].toString())
-        }
+    fun addUser(user: DatfClass) {
+        mListUsers.add(user)
     }
+
+
+//    init {
+//
+//        for (i: Int in 0..99) {
+//            val user: DatfClass = DatfClass()
+//            user.poto = i%2 == 0
+//            Log.d ("datd333", "${user.dataCreator.toString()}")
+//            mListUsers.add(user)
+//
+//            Log.d ("mDataList", mListUsers[i].toString())
+//        }
+//    }
 
     fun getUser(id:UUID): DatfClass? {
         for (i in mListUsers) {

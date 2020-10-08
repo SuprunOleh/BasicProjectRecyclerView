@@ -6,4 +6,8 @@
     <string name="user_tel">tel</string>
     <string name="num_tel">non</string>
     <string name="tel_picker_title">Tel of user</string>
+    <string name="new_user">New User</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$d crimes</string>
 </resources>
