@@ -10,4 +10,7 @@
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
+    <string name="item_user">Item user</string>
+    <string name="item_33333">3333333</string>
+    <string name="item_44444">4444444</string>
 </resources>

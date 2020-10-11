@@ -17,9 +17,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UserPagerActivity">
+        <activity android:name=".UserPagerActivity"
+            android:parentActivityName=".ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
 
             </intent-filter>
