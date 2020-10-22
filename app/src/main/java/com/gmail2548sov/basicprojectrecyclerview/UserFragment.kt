@@ -35,10 +35,6 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
     var mDataClass: DatfClass? = null
     lateinit var mDateButton: TextView
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
@@ -56,20 +52,19 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
         view.user_id.text = mDataClass?.id.toString()
         updateDate()
         //view?.data_dialog_fragment_user?.text = mDataClass?.dataCreator.toString()
-        view.photo.isChecked = mDataClass?.poto?:false
+        view.photo.isChecked = mDataClass?.photo?:false
         view.photo.setOnCheckedChangeListener(this)
         view.tel.setOnClickListener(this)
         return view
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        mDataClass?.poto = isChecked
-        Log.d("kl555", "${mDataClass?.poto.toString()}")
+        mDataClass?.photo = isChecked
+        Log.d("kl555", "${mDataClass?.photo.toString()}")
     }
 
     override fun onClick(v: View?) {
         val fm = fragmentManager
-
 
         val dialogTel = TelPickerFragment.newInstance(mDataClass?.dataCreator)
         dialogTel.setTargetFragment(this, REQUEST_DATA)

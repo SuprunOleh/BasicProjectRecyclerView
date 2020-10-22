@@ -77,8 +77,6 @@ class ListFragment : Fragment() {
     }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -109,6 +107,7 @@ class ListFragment : Fragment() {
     fun updateUI() {
 
         if (mUserAdapter == null) {
+            SingltonUsers.addContext(context!!.applicationContext)
             mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
             mRecyclerView.adapter = mUserAdapter
         } else {Log.d ("lk333", "${SingltonUsers.mChange}")
@@ -116,8 +115,6 @@ class ListFragment : Fragment() {
             mUserAdapter?.notifyDataSetChanged()
         }
         updateSubtitle()
-
-
     }
 
     inner class UsersHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -131,8 +128,8 @@ class ListFragment : Fragment() {
         fun bindingDateUser(dataUser: DatfClass) {
             mUser = dataUser
             view.item_id.text = mUser.id.toString()
-            Log.d ("kl444", "${mUser.poto}")
-            view.photo.visibility = if (mUser.poto) View.VISIBLE else View.GONE
+            Log.d ("kl444", "${mUser.photo}")
+            view.photo.visibility = if (mUser.photo) View.VISIBLE else View.GONE
         }
 
         override fun onClick(v: View?) {

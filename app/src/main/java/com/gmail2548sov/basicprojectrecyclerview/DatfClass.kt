@@ -8,5 +8,5 @@ data class DatfClass(
     var surname: String? = null,
     var tel: String? = null,
     var dataCreator: Date = Date(),
-    var poto: Boolean = false
+    var photo: Boolean = false
 )
