@@ -40,6 +40,7 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
         //var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
         var id = arguments?.getSerializable(FRAGMENT_USER_ID) as UUID
         mDataClass = SingltonUsers.getUser(id)
+        Log.d ("1bd1", "getWritableDatabase3")
     }
 
     override fun onCreateView(
@@ -84,6 +85,13 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
 
     fun updateDate(){
         mDateButton.text = mDataClass?.dataCreator.toString()
+    }
+
+    override fun onPause() {
+        mDataClass?.let { SingltonUsers.upDateUser(it) }
+        Log.d ("1bd1", "getWritableDatabase3")
+        super.onPause()
+
     }
 
 }

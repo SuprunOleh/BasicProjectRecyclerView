@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gmail2548sov.basicprojectrecyclerview.database.UserBaseHelper
 import kotlinx.android.synthetic.main.item_user.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,6 +21,10 @@ class ListFragment : Fragment() {
         final val SAVED_SUBTITLE_VISIBLE:String = "subtitle"
 
     }
+
+
+
+
 
     lateinit var mRecyclerView: RecyclerView
     var mUserAdapter: UsersAdapter? = null
@@ -78,6 +83,10 @@ class ListFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d ("1bd1", "${SingltonUsers.mDataBase.toString()}")
+        SingltonUsers.addContextBase(context!!.applicationContext)
+        Log.d ("1bd1", "${SingltonUsers.mDataBase.toString()}")
+        Log.d ("1bd1", "getWritableDatabase2")
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
@@ -107,7 +116,7 @@ class ListFragment : Fragment() {
     fun updateUI() {
 
         if (mUserAdapter == null) {
-            SingltonUsers.addContext(context!!.applicationContext)
+            SingltonUsers.mContext = context!!.applicationContext
             mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
             mRecyclerView.adapter = mUserAdapter
         } else {Log.d ("lk333", "${SingltonUsers.mChange}")

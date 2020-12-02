@@ -9,7 +9,7 @@ class UserDbSchema {
             const val UUID = "uuid"
             const val NAME = "name"
             const val DATE = "date"
-            const val SOLVED = "solved"
+            const val PHOTO = "photo"
         }
     }
 

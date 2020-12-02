@@ -1,50 +1,67 @@
 package com.gmail2548sov.basicprojectrecyclerview
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.gmail2548sov.basicprojectrecyclerview.database.UserBaseHelper
+import com.gmail2548sov.basicprojectrecyclerview.database.UserDbSchema
 import java.util.*
 import kotlin.collections.ArrayList
 
 object SingltonUsers {
-    val mListUsers: ArrayList<DatfClass> = ArrayList()
+
     lateinit var mContext: Context
+    var mDataBase: SQLiteDatabase? = null
+    val mListUsers: ArrayList<DatfClass> = ArrayList()
+
     var mChange: Int = 0
-    
 
-    lateinit var mDataBase: SQLiteDatabase
 
-    fun addContext(context: Context){
+
+
+
+    fun addContextBase(context: Context){
         mContext = context
-        mDataBase = UserBaseHelper(mContext).writableDatabase
-    }
+        mDataBase = UserBaseHelper(context).getWritableDatabase()
+        Log.d ("1bd1", "getWritableDatabase")
 
+    }
 
     fun addUser(user: DatfClass) {
-        mListUsers.add(user)
+        val values:ContentValues = getContentValues(user)
+        mDataBase?.insert(UserDbSchema.UserTable.NAME, null, values)
+    }
+
+    fun getUser(id:UUID): DatfClass? {
+
+        return null
+    }
+
+    fun getContentValues(user:DatfClass): ContentValues {
+        val values: ContentValues = ContentValues()
+        values.put(UserDbSchema.UserTable.Cols.UUID, user.id.toString())
+        values.put(UserDbSchema.UserTable.Cols.NAME, user.name)
+        values.put(UserDbSchema.UserTable.Cols.DATE, user.dataCreator.toString())
+        values.put(UserDbSchema.UserTable.Cols.PHOTO, if(user.photo) 1 else 0)
+
+        return values
     }
 
 
-//    init {
-//
-//        for (i: Int in 0..99) {
-//            val user: DatfClass = DatfClass()
-//            user.photo = i%2 == 0
-//            Log.d ("datd333", "${user.dataCreator.toString()}")
-//            mListUsers.add(user)
-//
-//            Log.d ("mDataList", mListUsers[i].toString())
-//        }
-//    }
 
-    fun getUser(id:UUID): DatfClass? {
-        for (i in mListUsers) {
+    fun upDateUser(user:DatfClass) {
+        val uuidString:String = user.id.toString()
+        val values:ContentValues = getContentValues(user)
 
-            if (i.id==id) {
-                return i}
-        }
-        return null
+        mDataBase?.update(UserDbSchema.UserTable.NAME, values, UserDbSchema.UserTable.Cols.UUID + " = ?", arrayOf(uuidString))
+    }
+
+    private fun queryUsers(whereClause: String, whereArgs: Array<String>): Cursor{
+
+        val cursor: Cursor = mDataBase!!.query(UserDbSchema.UserTable.NAME, null, whereClause, whereArgs, null, null, null)
+        return cursor
     }
 
 }

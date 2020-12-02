@@ -29,6 +29,7 @@ class UserPagerActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d ("1bd1", "getWritableDatabase3")
         setContentView(R.layout.user_pager)
         mViewPager = pager_view
 
@@ -44,6 +45,7 @@ class UserPagerActivity: AppCompatActivity() {
         })
 
         for (i in 0..mUsers.size) {
+            if (mUsers.size==0) break
             if (mUsers.get(i).id==intent.getSerializableExtra(ID_USER)) {
                 mViewPager.currentItem = i
                 break
