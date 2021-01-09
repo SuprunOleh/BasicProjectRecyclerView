@@ -24,8 +24,6 @@ class UserBaseHelper(val context: Context) :
                     Cols.PHOTO +
                     ")"
         )
-        //", " + UserTable.Cols.PHOTO +
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

@@ -8,12 +8,8 @@ import android.view.*
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import kotlinx.android.synthetic.main.date_dialog.*
-import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnClickListener {
@@ -39,7 +35,7 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
         super.onCreate(savedInstanceState)
         //var id = activity?.intent?.getSerializableExtra(MainActivity.ID_USER) as UUID
         var id = arguments?.getSerializable(FRAGMENT_USER_ID) as UUID
-        mDataClass = SingltonUsers.getUser(id)
+        mDataClass = Singlton.getSinglton(context!!)?.getUser(id)
         Log.d ("1bd1", "getWritableDatabase3")
     }
 
@@ -88,7 +84,8 @@ class UserFragment: Fragment(), CompoundButton.OnCheckedChangeListener, View.OnC
     }
 
     override fun onPause() {
-        mDataClass?.let { SingltonUsers.upDateUser(it) }
+        val singlton: Singlton? = context?.let { Singlton.getSinglton(it) }
+        mDataClass?.let { singlton?.upDateUser(it) }
         Log.d ("1bd1", "getWritableDatabase3")
         super.onPause()
 

@@ -20,33 +20,38 @@ class UserPagerActivity: AppCompatActivity() {
         fun newIntent(context: Context?, id: UUID): Intent {
             val intent = Intent(context, UserPagerActivity::class.java)
             intent.putExtra(UserPagerActivity.ID_USER, id)
+            Log.d ("2223", "$id")
             return intent
         }
     }
 
     lateinit var mViewPager: ViewPager
-    val mUsers = SingltonUsers.mListUsers
+    val mUsers = Singlton.getSinglton(this)?.getUsers()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d ("1bd1", "getWritableDatabase3")
+        Log.d ("1bd1", "{${mUsers.toString()} +    1111}")
         setContentView(R.layout.user_pager)
         mViewPager = pager_view
+        Log.d ("1bd1", "{$mViewPager}")
 
         val fm: FragmentManager = supportFragmentManager
         mViewPager.adapter = (object : FragmentStatePagerAdapter(fm) {
             override fun getItem(position: Int): Fragment {
-                Log.d("lk111", "$position")
-                return UserFragment.newInstance(mUsers.get(position).id)
+                Log.d("11123", "${mUsers?.get(position)?.id?.toString()+  555}")
+                return mUsers?.get(position)?.id?.let { UserFragment.newInstance(it) }!!
             }
             override fun getCount(): Int {
-                return mUsers.size
+                return mUsers?.size!!
             }
         })
 
-        for (i in 0..mUsers.size) {
-            if (mUsers.size==0) break
-            if (mUsers.get(i).id==intent.getSerializableExtra(ID_USER)) {
+        for (i in 0..mUsers?.size!!) {
+//            Log.d("11123", "${mUsers.get(i).toString()+  555}")
+            if (mUsers?.size==0) break
+            if (mUsers?.get(i)?.id==intent.getSerializableExtra(ID_USER)) {
                 mViewPager.currentItem = i
                 break
             }

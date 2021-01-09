@@ -22,46 +22,41 @@ object SingltonUsers {
 
 
 
-    fun addContextBase(context: Context){
-        mContext = context
-        mDataBase = UserBaseHelper(context).getWritableDatabase()
-        Log.d ("1bd1", "getWritableDatabase")
+//    fun addContextBase(context: Context){
+//        mContext = context
+//        mDataBase = UserBaseHelper(context).getWritableDatabase()
+//        Log.d ("1bd1", "getWritableDatabase")
+//
+//    }
+//
+//    fun addUser(user: DatfClass) {
+//        val values:ContentValues = getContentValues(user)
+//        mDataBase?.insert(UserDbSchema.UserTable.NAME, null, values)
+//    }
+//
+//    fun getUser(id:UUID): DatfClass? {
+//
+//        return null
+//    }
+//
+//    fun getContentValues(user:DatfClass): ContentValues {
+//        val values: ContentValues = ContentValues()
+//        values.put(UserDbSchema.UserTable.Cols.UUID, user.id.toString())
+//        values.put(UserDbSchema.UserTable.Cols.NAME, user.name)
+//        values.put(UserDbSchema.UserTable.Cols.DATE, user.dataCreator.toString())
+//        values.put(UserDbSchema.UserTable.Cols.PHOTO, if(user.photo) 1 else 0)
+//
+//        return values
+//    }
+//
+//
+//
+//    fun upDateUser(user:DatfClass) {
+//        val uuidString:String = user.id.toString()
+//        val values:ContentValues = getContentValues(user)
+//        mDataBase?.update(UserDbSchema.UserTable.NAME, values, UserDbSchema.UserTable.Cols.UUID + " = ?", arrayOf(uuidString))
+//    }
 
-    }
 
-    fun addUser(user: DatfClass) {
-        val values:ContentValues = getContentValues(user)
-        mDataBase?.insert(UserDbSchema.UserTable.NAME, null, values)
-    }
-
-    fun getUser(id:UUID): DatfClass? {
-
-        return null
-    }
-
-    fun getContentValues(user:DatfClass): ContentValues {
-        val values: ContentValues = ContentValues()
-        values.put(UserDbSchema.UserTable.Cols.UUID, user.id.toString())
-        values.put(UserDbSchema.UserTable.Cols.NAME, user.name)
-        values.put(UserDbSchema.UserTable.Cols.DATE, user.dataCreator.toString())
-        values.put(UserDbSchema.UserTable.Cols.PHOTO, if(user.photo) 1 else 0)
-
-        return values
-    }
-
-
-
-    fun upDateUser(user:DatfClass) {
-        val uuidString:String = user.id.toString()
-        val values:ContentValues = getContentValues(user)
-
-        mDataBase?.update(UserDbSchema.UserTable.NAME, values, UserDbSchema.UserTable.Cols.UUID + " = ?", arrayOf(uuidString))
-    }
-
-    private fun queryUsers(whereClause: String, whereArgs: Array<String>): Cursor{
-
-        val cursor: Cursor = mDataBase!!.query(UserDbSchema.UserTable.NAME, null, whereClause, whereArgs, null, null, null)
-        return cursor
-    }
 
 }

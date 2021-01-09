@@ -1,7 +1,5 @@
 package com.gmail2548sov.basicprojectrecyclerview
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,10 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gmail2548sov.basicprojectrecyclerview.database.UserBaseHelper
 import kotlinx.android.synthetic.main.item_user.view.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ListFragment : Fragment() {
 
@@ -21,9 +16,6 @@ class ListFragment : Fragment() {
         final val SAVED_SUBTITLE_VISIBLE:String = "subtitle"
 
     }
-
-
-
 
 
     lateinit var mRecyclerView: RecyclerView
@@ -40,16 +32,18 @@ class ListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("menu333", "asdfasd ")
 
         when (item.itemId) {
             R.id.new_user -> {
                 val user: DatfClass = DatfClass()
-                SingltonUsers.addUser(user)
-//                Log.d("menu333", "asdfasd ${user.toString()}")
+                Singlton.getSinglton(context!!)?.addUser(user)
+                Log.d("get222", "${Singlton.getSinglton(context!!)?.getUsers()} + 11115")
+                Log.d("get222", "${Singlton.getSinglton(context!!)?.getUsers()} + 11116")
+                Log.d("get2223", "${user.toString()+999}")
+
                 val intent = UserPagerActivity.newIntent(context, user.id)
                 startActivity(intent)
-//                updateUI()
+               // updateUI()
                 return true
             }
             R.id.new_item -> {
@@ -65,7 +59,7 @@ class ListFragment : Fragment() {
 
     fun updateSubtitle(){
 
-        val userCount = SingltonUsers.mListUsers.size
+        val userCount = Singlton.getSinglton(context!!)?.getUsers()?.size
         var subtitle:String? = getString(R.string.subtitle_format, userCount)
         //val activity_us = activity
 
@@ -83,10 +77,7 @@ class ListFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d ("1bd1", "${SingltonUsers.mDataBase.toString()}")
-        SingltonUsers.addContextBase(context!!.applicationContext)
-        Log.d ("1bd1", "${SingltonUsers.mDataBase.toString()}")
-        Log.d ("1bd1", "getWritableDatabase2")
+
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
@@ -114,13 +105,17 @@ class ListFragment : Fragment() {
     }
 
     fun updateUI() {
+        val singlton: Singlton = Singlton.getSinglton(context!!.applicationContext)!!
 
         if (mUserAdapter == null) {
-            SingltonUsers.mContext = context!!.applicationContext
-            mUserAdapter = UsersAdapter(SingltonUsers.mListUsers)
+
+
+            mUserAdapter = UsersAdapter(singlton.getUsers())
+            Log.d ("userCursor2225","${singlton.getUsers().size.toString()}+  557")
             mRecyclerView.adapter = mUserAdapter
-        } else {Log.d ("lk333", "${SingltonUsers.mChange}")
-            //mUserAdapter?.notifyItemChanged(SingltonUsers.mChange)
+        } else {
+            mUserAdapter!!.setUsers(singlton.getUsers())
+            Log.d ("userCursor2223","${singlton.getUsers().size.toString()}+  777")
             mUserAdapter?.notifyDataSetChanged()
         }
         updateSubtitle()
@@ -153,7 +148,7 @@ class ListFragment : Fragment() {
 
     }
 
-    inner class UsersAdapter(val listUsers: ArrayList<DatfClass>) :
+    inner class UsersAdapter(var listUsers: ArrayList<DatfClass>) :
         RecyclerView.Adapter<UsersHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersHolder {
@@ -168,6 +163,10 @@ class ListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: UsersHolder, position: Int) {
             holder.bindingDateUser(listUsers.get(position))
+        }
+
+        fun setUsers(users: ArrayList<DatfClass>) {
+                listUsers = users
         }
 
     }
